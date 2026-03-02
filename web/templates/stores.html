@@ -1,0 +1,23 @@
+{{define "stores"}}
+{{template "page_start" .}}
+{{template "topbar" .}}
+{{template "flash" .}}
+<section class="card">
+  <div class="card__title-row">
+    <h2>Add store</h2>
+    <span id="stores-message" class="inline-message"></span>
+  </div>
+  <form action="/stores" method="post" class="stack-form" data-async-form data-refresh-targets="#stores-panel" data-reset-on-success="true" data-message-target="#stores-message">
+    <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+    <label>
+      <span>Store name</span>
+      <input type="text" name="name" placeholder="Trader Joe's" required>
+    </label>
+    <button class="primary-button" type="submit">Save store</button>
+  </form>
+</section>
+<section id="stores-panel" data-poll-url="/stores?fragment=1" data-poll-interval="{{.PollSeconds}}">
+  {{template "stores_fragment" .}}
+</section>
+{{template "page_end" .}}
+{{end}}

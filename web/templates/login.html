@@ -1,0 +1,12 @@
+{{define "login"}}
+{{template "page_start" .}}
+<section class="auth-card">
+  <p class="eyebrow">FridgeFlow</p>
+  <h1>The grocery list built for the actual store run.</h1>
+  <p class="lede">Shared list, store-specific focus mode, and quick purchase taps when you are walking the aisle. Access is invite-only.</p>
+  {{template "flash" .}}
+  <a class="primary-button primary-button--block" href="/auth/google/start">Continue with Google</a>
+  <p class="auth-card__note">Use the Google account that should belong to your household. The first login creates the owner household.</p>
+</section>
+{{template "page_end" .}}
+{{end}}

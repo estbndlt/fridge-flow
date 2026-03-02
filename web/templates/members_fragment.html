@@ -1,0 +1,47 @@
+{{define "members_fragment"}}
+<section class="card">
+  <div class="card__title-row">
+    <h2>Household members</h2>
+  </div>
+  <div class="card-list">
+    {{range .Members}}
+    <article class="card card--compact">
+      <div class="card__title-row">
+        <div>
+          <h2>{{.DisplayName}}</h2>
+          <p class="muted">{{.Email}} · {{.Role}}</p>
+        </div>
+        {{if and $.IsOwner (ne .Role "owner")}}
+        <form action="/settings/members/{{.UserID}}/remove" method="post" data-async-form data-refresh-targets="#members-panel">
+          <input type="hidden" name="csrf_token" value="{{$.CSRFToken}}">
+          <button class="text-button text-button--danger" type="submit">Remove</button>
+        </form>
+        {{end}}
+      </div>
+    </article>
+    {{end}}
+  </div>
+</section>
+
+<section class="card">
+  <div class="card__title-row">
+    <h2>Pending invites</h2>
+  </div>
+  {{if not .Invites}}
+  <p class="muted">No pending invites.</p>
+  {{else}}
+  <div class="card-list">
+    {{range .Invites}}
+    <article class="card card--compact">
+      <div class="card__title-row">
+        <div>
+          <h2>{{.Email}}</h2>
+          <p class="muted">Created {{formatTimestamp .CreatedAt}}</p>
+        </div>
+      </div>
+    </article>
+    {{end}}
+  </div>
+  {{end}}
+</section>
+{{end}}

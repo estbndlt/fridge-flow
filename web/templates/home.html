@@ -1,0 +1,50 @@
+{{define "home"}}
+{{template "page_start" .}}
+{{template "topbar" .}}
+<section class="hero-card">
+  <div>
+    <p class="hero-card__label">Shared grocery list</p>
+    <h2>Drop it once. Shop it by store.</h2>
+  </div>
+  <p class="hero-card__copy">Each item belongs to a store, so Costco and Trader Joe’s stay separate when you need them to.</p>
+</section>
+{{template "flash" .}}
+<section class="card">
+  <div class="card__title-row">
+    <h2>Quick add</h2>
+    <span id="home-form-message" class="inline-message"></span>
+  </div>
+  <form action="/items" method="post" class="stack-form" data-async-form data-refresh-targets="#items-panel" data-reset-on-success="true" data-message-target="#home-form-message">
+    <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+    <label>
+      <span>Item</span>
+      <input type="text" name="name" placeholder="Eggs" autocomplete="off" required>
+    </label>
+    <div class="form-grid">
+      <label>
+        <span>Quantity</span>
+        <input type="text" name="quantity_text" placeholder="2 dozen">
+      </label>
+      <label>
+        <span>Store</span>
+        <select name="store_id" required>
+          <option value="">Choose a store</option>
+          {{range .Stores}}
+          <option value="{{.ID}}">{{.Name}}</option>
+          {{end}}
+        </select>
+      </label>
+    </div>
+    <label>
+      <span>Notes</span>
+      <input type="text" name="notes" placeholder="Cage free if possible">
+    </label>
+    <button class="primary-button" type="submit">Add to list</button>
+  </form>
+</section>
+
+<section id="items-panel" data-poll-url="/items/fragment" data-poll-interval="{{.PollSeconds}}">
+  {{template "items_fragment" .}}
+</section>
+{{template "page_end" .}}
+{{end}}

@@ -1,0 +1,16 @@
+services:
+  web:
+    image: ${APP_IMAGE}:${APP_TAG}
+    pull_policy: always
+    env_file:
+      - ${PI_ENV_FILE:-/home/estbndlt/.config/fridge-flow/env.pi}
+    ports:
+      - "127.0.0.1:8080:8080"
+
+  cloudflared:
+    image: cloudflare/cloudflared:2026.2.0
+    restart: unless-stopped
+    command: ["tunnel", "--metrics", "127.0.0.1:20241", "--no-autoupdate", "run", "--url", "http://127.0.0.1:8080", "--token", "${TUNNEL_TOKEN}"]
+    network_mode: host
+    depends_on:
+      - web

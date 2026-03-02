@@ -1,0 +1,10 @@
+{{define "unauthorized"}}
+{{template "page_start" .}}
+<section class="auth-card">
+  <p class="eyebrow">Invite Required</p>
+  <h1>This Google account is not in the household yet.</h1>
+  <p class="lede">Ask the FridgeFlow owner to add this email from the Members screen, then try Google sign-in again.</p>
+  <a class="primary-button primary-button--block" href="/login">Back to login</a>
+</section>
+{{template "page_end" .}}
+{{end}}

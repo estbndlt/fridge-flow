@@ -1,0 +1,6 @@
+.git
+.gitignore
+.env.local
+.env.pi
+tmp
+node_modules

@@ -1,0 +1,26 @@
+{{define "history_fragment"}}
+{{if not .Items}}
+<section class="empty-state">
+  <h2>No purchase history yet.</h2>
+  <p>Once you mark items bought, they will show up here for quick re-add.</p>
+</section>
+{{else}}
+<div class="card-list">
+  {{range .Items}}
+  <article class="card card--compact">
+    <div class="card__title-row">
+      <div>
+        <h2>{{storeLabel .QuantityText .Name}}</h2>
+        <p class="muted">{{.StoreName}}{{if .PurchasedAt}} · bought {{formatMaybeTimestamp .PurchasedAt}}{{end}}</p>
+        {{if .Notes}}<p class="muted">{{.Notes}}</p>{{end}}
+      </div>
+      <form action="/items/{{.ID}}/restore" method="post" data-async-form data-refresh-targets="#history-panel,#items-panel">
+        <input type="hidden" name="csrf_token" value="{{$.CSRFToken}}">
+        <button class="ghost-button" type="submit">Re-add</button>
+      </form>
+    </div>
+  </article>
+  {{end}}
+</div>
+{{end}}
+{{end}}

@@ -1,0 +1,32 @@
+{{define "focus_fragment"}}
+<section class="hero-card hero-card--tight">
+  <div>
+    <p class="hero-card__label">Focus mode</p>
+    <h2>{{.Store.Name}}</h2>
+  </div>
+  <p class="hero-card__copy">{{len .Items}} item{{if ne (len .Items) 1}}s{{end}} left for this stop.</p>
+</section>
+<p><a class="text-link" href="/">Back to all stores</a></p>
+{{if not .Items}}
+<section class="empty-state">
+  <h2>{{.Store.Name}} is clear.</h2>
+  <p>Nothing left to buy here.</p>
+</section>
+{{else}}
+<div class="focus-stack">
+  {{range .Items}}
+  <article class="focus-card">
+    <div>
+      <p class="focus-card__title">{{storeLabel .QuantityText .Name}}</p>
+      {{if .Notes}}<p class="focus-card__note">{{.Notes}}</p>{{end}}
+    </div>
+    <form action="/items/{{.ID}}/purchase" method="post" data-async-form data-refresh-targets="#focus-panel,#items-panel">
+      <input type="hidden" name="csrf_token" value="{{$.CSRFToken}}">
+      <input type="hidden" name="redirect_to" value="/stores/{{$.Store.ID}}/focus">
+      <button class="primary-button primary-button--block" type="submit">Mark as bought</button>
+    </form>
+  </article>
+  {{end}}
+</div>
+{{end}}
+{{end}}
