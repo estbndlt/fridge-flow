@@ -5,4 +5,4 @@ services:
     env_file:
       - ${LOCAL_ENV_FILE:-.env.local}
     ports:
-      - "127.0.0.1:3000:8080"
+      - "127.0.0.1:${LOCAL_HOST_PORT:-3000}:8080"
