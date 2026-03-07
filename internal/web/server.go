@@ -235,7 +235,7 @@ func (s *Server) handleLogin(w http.ResponseWriter, r *http.Request) {
 	data := loginPageData{
 		pageMeta: pageMeta{
 			AppName: s.cfg.AppName,
-			Title:   "Login",
+			Title:   "Sign in",
 		},
 		Error: strings.TrimSpace(r.URL.Query().Get("error")),
 	}
@@ -276,7 +276,7 @@ func (s *Server) handleGoogleCallback(w http.ResponseWriter, r *http.Request) {
 			data := unauthorizedPageData{
 				pageMeta: pageMeta{
 					AppName: s.cfg.AppName,
-					Title:   "Invite required",
+					Title:   "Access pending",
 				},
 			}
 			s.render(w, http.StatusForbidden, "unauthorized", data)
@@ -324,7 +324,7 @@ func (s *Server) handleHome(w http.ResponseWriter, r *http.Request, currentUser 
 	data := homePageData{
 		pageMeta: pageMeta{
 			AppName:     s.cfg.AppName,
-			Title:       "Shared list",
+			Title:       "Trip board",
 			CurrentUser: &currentUser,
 			ActiveTab:   "home",
 			CSRFToken:   csrf,
@@ -520,7 +520,7 @@ func (s *Server) handleHistory(w http.ResponseWriter, r *http.Request, currentUs
 	data := historyPageData{
 		pageMeta: pageMeta{
 			AppName:     s.cfg.AppName,
-			Title:       "History",
+			Title:       "Repeat buys",
 			CurrentUser: &currentUser,
 			ActiveTab:   "history",
 			CSRFToken:   csrf,
@@ -549,7 +549,7 @@ func (s *Server) handleStores(w http.ResponseWriter, r *http.Request, currentUse
 	data := storesPageData{
 		pageMeta: pageMeta{
 			AppName:     s.cfg.AppName,
-			Title:       "Stores",
+			Title:       "Store lineup",
 			CurrentUser: &currentUser,
 			ActiveTab:   "stores",
 			CSRFToken:   csrf,
@@ -613,7 +613,7 @@ func (s *Server) handleMembers(w http.ResponseWriter, r *http.Request, currentUs
 	data := membersPageData{
 		pageMeta: pageMeta{
 			AppName:     s.cfg.AppName,
-			Title:       "Members",
+			Title:       "Household access",
 			CurrentUser: &currentUser,
 			ActiveTab:   "members",
 			CSRFToken:   csrf,

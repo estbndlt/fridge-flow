@@ -1,6 +1,5 @@
 {{define "focus"}}
 {{template "page_start" .}}
-{{template "topbar" .}}
 {{template "flash" .}}
 <section id="focus-panel" data-poll-url="/stores/{{.Store.ID}}/focus?fragment=1" data-poll-interval="{{.PollSeconds}}">
   {{template "focus_fragment" .}}
