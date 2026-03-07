@@ -1,22 +1,30 @@
 {{define "history_fragment"}}
 {{if not .Items}}
-<section class="empty-state">
-  <h2>No purchase history yet.</h2>
-  <p>Once you mark items bought, they will show up here for quick re-add.</p>
+<section class="empty-panel">
+  <h2>No repeat buys yet</h2>
+  <p>Purchased items will land here so they are easy to bring back.</p>
 </section>
 {{else}}
-<div class="card-list">
+<div class="receipt-list">
   {{range .Items}}
-  <article class="card card--compact">
-    <div class="card__title-row">
-      <div>
-        <h2>{{storeLabel .QuantityText .Name}}</h2>
-        <p class="muted">{{.StoreName}}{{if .PurchasedAt}} · bought {{formatMaybeTimestamp .PurchasedAt}}{{end}}</p>
-        {{if .Notes}}<p class="muted">{{.Notes}}</p>{{end}}
+  <article class="receipt-row">
+    <div class="receipt-row__main">
+      <div class="item-row__headline">
+        {{if .QuantityText}}<span class="quantity-chip">{{.QuantityText}}</span>{{end}}
+        <h2>{{.Name}}</h2>
       </div>
+      <div class="item-row__meta">
+        <div class="receipt-row__meta-line">
+          <span class="count-chip count-chip--muted">{{.StoreName}}</span>
+          {{if .PurchasedAt}}<span class="receipt-row__timestamp">Bought {{formatMaybeTimestamp .PurchasedAt}}</span>{{end}}
+        </div>
+        {{if .Notes}}<p>{{.Notes}}</p>{{end}}
+      </div>
+    </div>
+    <div class="receipt-row__action">
       <form action="/items/{{.ID}}/restore" method="post" data-async-form data-refresh-targets="#history-panel,#items-panel">
         <input type="hidden" name="csrf_token" value="{{$.CSRFToken}}">
-        <button class="ghost-button" type="submit">Re-add</button>
+        <button class="secondary-button" type="submit">Re-add</button>
       </form>
     </div>
   </article>

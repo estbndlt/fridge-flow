@@ -1,26 +1,35 @@
 {{define "focus_fragment"}}
-<section class="hero-card hero-card--tight">
-  <div>
-    <p class="hero-card__label">Focus mode</p>
-    <h2>{{.Store.Name}}</h2>
+<section class="focus-header">
+  <div class="focus-header__copy">
+    <a class="focus-header__back" href="/">Back to all stores</a>
+    <div class="focus-header__title-group">
+      <h1>{{.Store.Name}}</h1>
+      <p class="section-banner__copy">Keep this stop tight and clear items as they go into the cart.</p>
+    </div>
   </div>
-  <p class="hero-card__copy">{{len .Items}} item{{if ne (len .Items) 1}}s{{end}} left for this stop.</p>
+  <div class="focus-header__meta">
+    <span class="count-chip count-chip--inverted">{{len .Items}} left</span>
+  </div>
 </section>
-<p><a class="text-link" href="/">Back to all stores</a></p>
 {{if not .Items}}
-<section class="empty-state">
-  <h2>{{.Store.Name}} is clear.</h2>
-  <p>Nothing left to buy here.</p>
+<section class="empty-panel">
+  <h2>This stop is clear</h2>
+  <p>Nothing is left to buy at {{.Store.Name}}.</p>
 </section>
 {{else}}
 <div class="focus-stack">
   {{range .Items}}
-  <article class="focus-card">
-    <div>
-      <p class="focus-card__title">{{storeLabel .QuantityText .Name}}</p>
-      {{if .Notes}}<p class="focus-card__note">{{.Notes}}</p>{{end}}
+  <article class="item-row item-row--focus">
+    <div class="item-row__main">
+      <div class="item-row__headline">
+        {{if .QuantityText}}<span class="quantity-chip">{{.QuantityText}}</span>{{end}}
+        <p class="item-row__name">{{.Name}}</p>
+      </div>
+      <div class="item-row__meta">
+        {{if .Notes}}<p>{{.Notes}}</p>{{else}}<p>Pick it up at this stop.</p>{{end}}
+      </div>
     </div>
-    <form action="/items/{{.ID}}/purchase" method="post" data-async-form data-refresh-targets="#focus-panel,#items-panel">
+    <form action="/items/{{.ID}}/purchase" method="post" class="item-row__action" data-async-form data-refresh-targets="#focus-panel,#items-panel">
       <input type="hidden" name="csrf_token" value="{{$.CSRFToken}}">
       <input type="hidden" name="redirect_to" value="/stores/{{$.Store.ID}}/focus">
       <button class="primary-button primary-button--block" type="submit">Mark as bought</button>

@@ -2,12 +2,12 @@
 {{template "page_start" .}}
 {{template "topbar" .}}
 {{template "flash" .}}
-<section class="hero-card hero-card--tight">
-  <div>
-    <p class="hero-card__label">History</p>
-    <h2>Quick re-add for the regulars.</h2>
+<section class="section-banner">
+  <div class="section-banner__body">
+    <p class="section-banner__kicker">Purchased items</p>
+    <h2>Repeat buys</h2>
+    <p class="section-banner__copy">Keep regulars close so you can bring them back to the live list in one tap.</p>
   </div>
-  <p class="hero-card__copy">Purchased items stay here so recurring groceries come back in one tap.</p>
 </section>
 <section id="history-panel" data-poll-url="/history?fragment=1" data-poll-interval="{{.PollSeconds}}">
   {{template "history_fragment" .}}

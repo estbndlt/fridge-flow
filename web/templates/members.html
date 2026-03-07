@@ -3,15 +3,17 @@
 {{template "topbar" .}}
 {{template "flash" .}}
 {{if .IsOwner}}
-<section class="card">
-  <div class="card__title-row">
-    <h2>Invite member</h2>
+<section class="utility-panel utility-panel--feature">
+  <div class="section-heading">
+    <div class="section-heading__copy">
+      <h2>Invite member</h2>
+    </div>
     <span id="members-message" class="inline-message"></span>
   </div>
-  <form action="/settings/members/invite" method="post" class="stack-form" data-async-form data-refresh-targets="#members-panel" data-reset-on-success="true" data-message-target="#members-message">
+  <form action="/settings/members/invite" method="post" class="utility-form" data-async-form data-refresh-targets="#members-panel" data-reset-on-success="true" data-message-target="#members-message">
     <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
     <label>
-      <span>Email</span>
+      <span class="field-label">Email</span>
       <input type="email" name="email" placeholder="name@gmail.com" required>
     </label>
     <button class="primary-button" type="submit">Create invite</button>

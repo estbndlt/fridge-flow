@@ -1,20 +1,27 @@
 {{define "members_fragment"}}
-<section class="card">
-  <div class="card__title-row">
-    <h2>Household members</h2>
+<section class="utility-panel">
+  <div class="section-heading">
+    <div class="section-heading__copy">
+      <h2>Household members</h2>
+    </div>
   </div>
-  <div class="card-list">
+  <div class="list-stack">
     {{range .Members}}
-    <article class="card card--compact">
-      <div class="card__title-row">
-        <div>
-          <h2>{{.DisplayName}}</h2>
-          <p class="muted">{{.Email}} · {{.Role}}</p>
+    <article class="member-row">
+      <div class="member-row__main">
+        <div class="member-row__title">
+          <div class="member-row__identity">
+            <h2>{{.DisplayName}}</h2>
+          </div>
+          <span class="role-chip">{{if eq .Role "owner"}}OWNER{{else}}MEMBER{{end}}</span>
         </div>
+        <p class="item-row__meta">{{.Email}}</p>
+      </div>
+      <div class="member-row__action">
         {{if and $.IsOwner (ne .Role "owner")}}
         <form action="/settings/members/{{.UserID}}/remove" method="post" data-async-form data-refresh-targets="#members-panel">
           <input type="hidden" name="csrf_token" value="{{$.CSRFToken}}">
-          <button class="text-button text-button--danger" type="submit">Remove</button>
+          <button class="danger-button danger-button--ghost" type="submit">Remove</button>
         </form>
         {{end}}
       </div>
@@ -23,21 +30,26 @@
   </div>
 </section>
 
-<section class="card">
-  <div class="card__title-row">
-    <h2>Pending invites</h2>
+<section class="utility-panel">
+  <div class="section-heading">
+    <div class="section-heading__copy">
+      <h2>Pending invites</h2>
+    </div>
   </div>
   {{if not .Invites}}
-  <p class="muted">No pending invites.</p>
+  <p class="item-row__meta">No pending invites.</p>
   {{else}}
-  <div class="card-list">
+  <div class="list-stack">
     {{range .Invites}}
-    <article class="card card--compact">
-      <div class="card__title-row">
-        <div>
-          <h2>{{.Email}}</h2>
-          <p class="muted">Created {{formatTimestamp .CreatedAt}}</p>
+    <article class="member-row">
+      <div class="member-row__main">
+        <div class="member-row__title">
+          <div class="member-row__identity">
+            <h2>{{.Email}}</h2>
+          </div>
+          <span class="role-chip role-chip--muted">INVITE</span>
         </div>
+        <p class="item-row__meta">Created {{formatTimestamp .CreatedAt}}</p>
       </div>
     </article>
     {{end}}

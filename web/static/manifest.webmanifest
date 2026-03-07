@@ -3,8 +3,8 @@
   "short_name": "FridgeFlow",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#f6f0df",
-  "theme_color": "#15352e",
+  "background_color": "#EDF3F5",
+  "theme_color": "#10222D",
   "icons": [
     {
       "src": "/static/icons/icon.svg",

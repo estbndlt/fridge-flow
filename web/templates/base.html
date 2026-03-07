@@ -5,23 +5,22 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>{{.Title}} · {{.AppName}}</title>
-  <meta name="theme-color" content="#15352e">
+  <meta name="theme-color" content="#10222D">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <link rel="manifest" href="/static/manifest.webmanifest">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="/static/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/static/app.css">
   <script defer src="/static/app.js"></script>
 </head>
 <body>
-  <div class="page-glow page-glow--top"></div>
-  <div class="page-glow page-glow--bottom"></div>
   {{if .CurrentUser}}
   <form id="logout-form" action="/auth/logout" method="post" class="hidden">
     <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
   </form>
   {{end}}
-  <main class="app-shell">
+  <main class="app-shell{{if not .CurrentUser}} app-shell--guest{{end}}">
 {{end}}
 
 {{define "page_end"}}
@@ -34,14 +33,18 @@
 {{end}}
 
 {{define "topbar"}}
-<header class="topbar">
-  <div>
-    <p class="eyebrow">{{.AppName}}</p>
-    <h1>{{.Title}}</h1>
-    {{if .CurrentUser}}<p class="topbar__sub">{{.CurrentUser.HouseholdName}}</p>{{end}}
+<header class="shell-bar">
+  <div class="shell-bar__identity">
+    <p class="shell-bar__app">{{.AppName}}</p>
+    <div class="shell-bar__title-group">
+      <h1>{{.Title}}</h1>
+    </div>
   </div>
   {{if .CurrentUser}}
-  <button class="ghost-button" type="submit" form="logout-form">Sign out</button>
+  <div class="shell-bar__actions">
+    <span class="shell-badge">{{.CurrentUser.HouseholdName}}</span>
+    <button class="secondary-button" type="submit" form="logout-form">Sign out</button>
+  </div>
   {{end}}
 </header>
 {{end}}
@@ -53,10 +56,10 @@
 {{end}}
 
 {{define "mobile_nav"}}
-<nav class="mobile-nav">
-  <a class="{{if eq .ActiveTab "home"}}is-active{{end}}" href="/">List</a>
-  <a class="{{if eq .ActiveTab "history"}}is-active{{end}}" href="/history">History</a>
-  <a class="{{if eq .ActiveTab "stores"}}is-active{{end}}" href="/stores">Stores</a>
-  <a class="{{if eq .ActiveTab "members"}}is-active{{end}}" href="/settings/members">Members</a>
+<nav class="bottom-dock" aria-label="Primary">
+  <a class="{{if eq .ActiveTab "home"}}is-active{{end}}" href="/"><span>List</span></a>
+  <a class="{{if eq .ActiveTab "history"}}is-active{{end}}" href="/history"><span>History</span></a>
+  <a class="{{if eq .ActiveTab "stores"}}is-active{{end}}" href="/stores"><span>Stores</span></a>
+  <a class="{{if eq .ActiveTab "members"}}is-active{{end}}" href="/settings/members"><span>Members</span></a>
 </nav>
 {{end}}

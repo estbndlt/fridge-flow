@@ -1,7 +1,8 @@
-const CACHE_NAME = "fridgeflow-v1";
+const CACHE_NAME = "fridgeflow-v2";
 const STATIC_ASSETS = [
   "/static/app.css",
   "/static/app.js",
+  "/static/fonts/manrope-latin.woff2",
   "/static/manifest.webmanifest",
   "/static/icons/icon.svg",
   "/favicon.svg",

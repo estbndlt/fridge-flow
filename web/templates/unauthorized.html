@@ -1,9 +1,13 @@
 {{define "unauthorized"}}
 {{template "page_start" .}}
-<section class="auth-card">
-  <p class="eyebrow">Invite Required</p>
-  <h1>This Google account is not in the household yet.</h1>
-  <p class="lede">Ask the FridgeFlow owner to add this email from the Members screen, then try Google sign-in again.</p>
+<section class="auth-panel auth-panel--warning">
+  <div class="auth-panel__header">
+    <p class="shell-bar__app">Access pending</p>
+    <div class="auth-panel__title-group">
+      <h1>This account is not in the household yet.</h1>
+      <p class="section-banner__copy">Ask the household owner to add this Google account from the Members screen, then try Google sign-in again.</p>
+    </div>
+  </div>
   <a class="primary-button primary-button--block" href="/login">Back to login</a>
 </section>
 {{template "page_end" .}}

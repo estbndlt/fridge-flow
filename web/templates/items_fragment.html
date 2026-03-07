@@ -1,50 +1,60 @@
 {{define "items_fragment"}}
 {{if not .Groups}}
-<section class="empty-state">
-  <p class="eyebrow">Ready for the next trip</p>
-  <h2>No active grocery items.</h2>
-  <p>Add your first store-specific item above so the list can split by where you plan to shop.</p>
+<section class="empty-panel">
+  <h2>No items on deck</h2>
+  <p>Add an item and assign a store to build the next run.</p>
 </section>
 {{else}}
 <div class="list-stack">
   {{range .Groups}}
-  <section class="card">
-    <div class="card__title-row">
-      <div>
-        <p class="eyebrow">Store</p>
-        <h2>{{.StoreName}}</h2>
+  <section class="store-panel">
+    <div class="store-panel__header">
+      <div class="store-panel__title">
+        <div class="store-panel__copy">
+          <h2>{{.StoreName}}</h2>
+        </div>
+        <div class="store-panel__badges">
+          <span class="count-chip">{{len .Items}} item{{if ne (len .Items) 1}}s{{end}}</span>
+        </div>
       </div>
-      <a class="ghost-button" href="/stores/{{.StoreID}}/focus">Focus view</a>
+      <div class="button-row">
+        <a class="secondary-button" href="/stores/{{.StoreID}}/focus">Focus view</a>
+      </div>
     </div>
     <div class="item-stack">
       {{range .Items}}
-      <article class="item-card">
-        <div class="item-card__main">
-          <p class="item-card__title">{{storeLabel .QuantityText .Name}}</p>
-          {{if .Notes}}<p class="item-card__note">{{.Notes}}</p>{{end}}
+      <article class="item-row">
+        <div class="item-row__main">
+          <div class="item-row__headline">
+            {{if .QuantityText}}<span class="quantity-chip">{{.QuantityText}}</span>{{end}}
+            <p class="item-row__name">{{.Name}}</p>
+          </div>
+          <div class="item-row__meta">
+            {{if .Notes}}<p>{{.Notes}}</p>{{else}}<p>Ready for this stop.</p>{{end}}
+          </div>
         </div>
-        <form action="/items/{{.ID}}/purchase" method="post" class="inline-form" data-async-form data-refresh-targets="#items-panel">
+        <form action="/items/{{.ID}}/purchase" method="post" class="inline-form item-row__action" data-async-form data-refresh-targets="#items-panel">
           <input type="hidden" name="csrf_token" value="{{$.CSRFToken}}">
           <input type="hidden" name="redirect_to" value="/">
-          <button class="pill-button" type="submit">Bought</button>
+          <button class="primary-button primary-button--compact" type="submit">Bought</button>
         </form>
-        <details class="item-card__details">
-          <summary>Edit</summary>
+        <details class="detail-panel">
+          <summary class="detail-panel__toggle">Edit item</summary>
           {{$item := .}}
-          <form action="/items/{{.ID}}/update" method="post" class="stack-form stack-form--compact" data-async-form data-refresh-targets="#items-panel">
+          <form action="/items/{{.ID}}/update" method="post" class="utility-form utility-form--compact" data-async-form data-refresh-targets="#items-panel">
             <input type="hidden" name="csrf_token" value="{{$.CSRFToken}}">
             <input type="hidden" name="redirect_to" value="/">
             <label>
-              <span>Name</span>
+              <span class="field-label">Name</span>
               <input type="text" name="name" value="{{.Name}}" required>
             </label>
             <div class="form-grid">
               <label>
-                <span>Quantity</span>
+                <span class="field-label">Quantity</span>
                 <input type="text" name="quantity_text" value="{{.QuantityText}}">
               </label>
               <label>
-                <span>Store</span>
+                <span class="field-label">Store</span>
                 <select name="store_id" required>
                   {{range $.Stores}}
                   <option value="{{.ID}}" {{if eq .ID $item.StoreID}}selected{{end}}>{{.Name}}</option>
@@ -53,17 +63,17 @@
               </label>
             </div>
             <label>
-              <span>Notes</span>
+              <span class="field-label">Notes</span>
               <input type="text" name="notes" value="{{.Notes}}">
             </label>
             <div class="button-row">
-              <button class="ghost-button" type="submit">Save</button>
+              <button class="secondary-button" type="submit">Save</button>
             </div>
           </form>
           <form action="/items/{{.ID}}/delete" method="post" class="inline-form" data-async-form data-refresh-targets="#items-panel">
             <input type="hidden" name="csrf_token" value="{{$.CSRFToken}}">
             <input type="hidden" name="redirect_to" value="/">
-            <button class="text-button text-button--danger" type="submit">Delete</button>
+            <button class="danger-button" type="submit">Delete</button>
           </form>
         </details>
       </article>

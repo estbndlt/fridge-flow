@@ -2,15 +2,17 @@
 {{template "page_start" .}}
 {{template "topbar" .}}
 {{template "flash" .}}
-<section class="card">
-  <div class="card__title-row">
-    <h2>Add store</h2>
+<section class="utility-panel utility-panel--feature">
+  <div class="section-heading">
+    <div class="section-heading__copy">
+      <h2>Add store</h2>
+    </div>
     <span id="stores-message" class="inline-message"></span>
   </div>
-  <form action="/stores" method="post" class="stack-form" data-async-form data-refresh-targets="#stores-panel" data-reset-on-success="true" data-message-target="#stores-message">
+  <form action="/stores" method="post" class="utility-form" data-async-form data-refresh-targets="#stores-panel" data-reset-on-success="true" data-message-target="#stores-message">
     <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
     <label>
-      <span>Store name</span>
+      <span class="field-label">Store name</span>
       <input type="text" name="name" placeholder="Trader Joe's" required>
     </label>
     <button class="primary-button" type="submit">Save store</button>

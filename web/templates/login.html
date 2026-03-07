@@ -1,12 +1,21 @@
 {{define "login"}}
 {{template "page_start" .}}
-<section class="auth-card">
-  <p class="eyebrow">FridgeFlow</p>
-  <h1>The grocery list built for the actual store run.</h1>
-  <p class="lede">Shared list, store-specific focus mode, and quick purchase taps when you are walking the aisle. Access is invite-only.</p>
+<section class="auth-panel">
+  <div class="auth-panel__header">
+    <p class="shell-bar__app">FridgeFlow</p>
+    <div class="auth-panel__title-group">
+      <h1>Shared household grocery list</h1>
+      <p class="section-banner__copy">Store-first lists, quick in-aisle focus mode, and invite-only household access.</p>
+    </div>
+  </div>
+  <div class="auth-benefits">
+    <div class="auth-benefit">Grouped by store</div>
+    <div class="auth-benefit">Fast focus mode</div>
+    <div class="auth-benefit">Invite-only access</div>
+  </div>
   {{template "flash" .}}
   <a class="primary-button primary-button--block" href="/auth/google/start">Continue with Google</a>
-  <p class="auth-card__note">Use the Google account that should belong to your household. The first login creates the owner household.</p>
+  <p class="auth-panel__note">Use the Google account that belongs to the household. The first successful sign-in becomes the owner account.</p>
 </section>
 {{template "page_end" .}}
 {{end}}

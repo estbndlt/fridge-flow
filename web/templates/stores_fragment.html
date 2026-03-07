@@ -1,24 +1,29 @@
 {{define "stores_fragment"}}
 {{if not .Stores}}
-<section class="empty-state">
+<section class="empty-panel">
   <h2>No stores yet.</h2>
   <p>Add the stores you actually shop so every item has a destination.</p>
 </section>
 {{else}}
-<div class="card-list">
+<div class="list-stack">
   {{range .Stores}}
-  <article class="card card--compact">
-    <div class="card__title-row">
-      <div>
-        <h2>{{.Name}}</h2>
-        <p class="muted">{{.ActiveItemCount}} active item{{if ne .ActiveItemCount 1}}s{{end}}{{if .Archived}} · archived{{end}}</p>
+  <article class="utility-panel utility-panel--compact">
+    <div class="store-panel__header">
+      <div class="store-panel__title">
+        <div class="store-panel__copy">
+          <h2>{{.Name}}</h2>
+        </div>
+        <div class="store-panel__badges">
+          <span class="count-chip {{if .Archived}}count-chip--muted{{end}}">{{.ActiveItemCount}} active item{{if ne .ActiveItemCount 1}}s{{end}}</span>
+          {{if .Archived}}<span class="count-chip count-chip--muted">Archived</span>{{end}}
+        </div>
       </div>
       {{if not .Archived}}
       <div class="button-row">
-        <a class="ghost-button" href="/stores/{{.ID}}/focus">Focus</a>
+        <a class="secondary-button" href="/stores/{{.ID}}/focus">Focus</a>
         <form action="/stores/{{.ID}}/archive" method="post" data-async-form data-refresh-targets="#stores-panel,#items-panel">
           <input type="hidden" name="csrf_token" value="{{$.CSRFToken}}">
-          <button class="text-button" type="submit" {{if gt .ActiveItemCount 0}}disabled{{end}}>Archive</button>
+          <button class="danger-button danger-button--ghost" type="submit" {{if gt .ActiveItemCount 0}}disabled{{end}}>Archive</button>
         </form>
       </div>
       {{end}}
